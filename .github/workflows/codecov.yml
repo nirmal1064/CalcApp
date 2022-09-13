@@ -16,6 +16,10 @@ jobs:
       - name: Make Gradle Executable
         run: chmod +x ./gradlew
       - name: Run Test Cases
-        run: ./gradlew clean build
+        run: ./gradlew clean test --info
       - name: Upload Jacoco Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
+        with:
+          directory: ./app/build/reports/jacoco/test/
+          files: ./jacocoTestReport.xml
+          fail_ci_if_error: true
