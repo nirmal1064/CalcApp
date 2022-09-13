@@ -1,0 +1,23 @@
+name: CodeCov Analysis
+on:
+  push:
+    branches:
+      - main
+jobs:
+  run:
+    name: Test and Upload Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Run Test Cases
+        run: ./gradlew clean test --info
+      - name: Upload Jacoco Coverage Report to CodeCov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./build/reports/jacoco/test
+          files: ./jacocoTestReport.xml
+          fail_ci_if_error: true
